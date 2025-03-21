@@ -1,0 +1,53 @@
+<!-- extension/popup.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tab Sync</title>
+  <style>
+    body {
+      width: 300px;
+      padding: 10px;
+      font-family: Arial, sans-serif;
+    }
+    button {
+      width: 100%;
+      margin: 5px 0;
+      padding: 8px;
+      background-color: #4285f4;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #3367d6;
+    }
+    #status {
+      margin-top: 10px;
+      padding: 5px;
+      text-align: center;
+    }
+    .success {
+      color: green;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>Tab Sync</h1>
+  <button id="syncTabs">Sync Current Tabs</button>
+  <button id="openTabs">Open Synced Tabs</button>
+  <button id="viewTabs">View Tab History</button>
+  <div id="status"></div>
+
+  <div id="settings">
+    <h3>Server Settings</h3>
+    <input type="text" id="serverUrl" placeholder="https://tab-sync.ryanzhou.xyz">
+    <button id="saveSettings">Save</button>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

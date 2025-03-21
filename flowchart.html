@@ -1,0 +1,80 @@
+<!-- filepath: c:\Users\ryanz\.vscode\Projects\google-extension-tab-sychronizer\flowchart.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mermaid Flowchart</title>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11.5.0/+esm';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+</head>
+<body>
+    <div class="mermaid">
+flowchart TB
+    subgraph "Source Computer"
+        ChromeExt1["Chrome Extension (Tab Sync)"]
+        UserTabs1["User's Browser Tabs - URLs - Scroll Positions - Video Timestamps"]
+    end
+
+    subgraph "Flask Backend Server"
+        Flask["Flask Application Port: 5000 Host: localhost"]
+        DB[(SQLite Database 'tabs.db' Location: server/)]
+        API1["API: /api/init Initializes DB"]
+        API2["API: /api/tabs Stores tab data"]
+        API3["API: /api/tabs/latest Retrieves latest tabs"]
+        API4["API: /api/tabs/history Retrieves tab history"]
+    end
+
+    subgraph "Cloudflare Infrastructure"
+        CloudflareTunnel["Cloudflare Tunnel Process: cloudflared Local Port: Connected to 5000"]
+        CloudflareDNS["Cloudflare DNS Domain: tab-sync.ryanzhou.xyz CNAME → tunnel-id.cfargotunnel.com"]
+        CloudflareEdge["Cloudflare Edge Network Secure TLS Termination DDoS Protection"]
+    end
+
+    subgraph "Target Computer"
+        ChromeExt2["Chrome Extension (Tab Sync)"]
+        UserTabs2["New Browser Tabs With Restored: - URLs - Scroll Positions - Video Timestamps"]
+    end
+
+    %% Data Flow for Tab Sync
+    UserTabs1 --> |"capture tab data"| ChromeExt1
+    ChromeExt1 --> |"HTTPS POST to https://tab-sync.ryanzhou.xyz/api/tabs"| CloudflareEdge
+    CloudflareEdge --> |"Route request based on hostname"| CloudflareDNS
+    CloudflareDNS --> |"Forward to tunnel"| CloudflareTunnel
+    CloudflareTunnel --> |"HTTP request to localhost:5000/api/tabs"| Flask
+    Flask --> |"Call save_tabs()"| API2
+    API2 --> |"Store data"| DB
+
+    %% Data Flow for Tab Retrieval
+    ChromeExt2 --> |"HTTPS GET to https://tab-sync.ryanzhou.xyz/api/tabs/latest"| CloudflareEdge
+    CloudflareEdge --> |"Route request"| CloudflareDNS
+    CloudflareDNS --> |"Forward to tunnel"| CloudflareTunnel
+    CloudflareTunnel --> |"HTTP request to localhost:5000/api/tabs/latest"| Flask
+    Flask --> |"Call get_latest_tabs()"| API3
+    API3 --> |"Retrieve data"| DB
+    API3 --> |"Return JSON response"| CloudflareTunnel
+    CloudflareTunnel --> |"Forward response"| CloudflareEdge
+    CloudflareEdge --> |"Return HTTPS response"| ChromeExt2
+    ChromeExt2 --> |"create & populate"| UserTabs2
+
+    %% Component Connections
+    ChromeExt1 -.-> UserTabs1
+    Flask -.-> API1
+    Flask -.-> API2
+    Flask -.-> API3
+    Flask -.-> API4
+    
+    %% Database Operations
+    API1 -.-> |"CREATE TABLE IF NOT EXISTS"| DB
+    API2 -.-> |"INSERT INTO tabs"| DB
+    API3 -.-> |"SELECT FROM tabs WHERE created_at = latest"| DB
+    API4 -.-> |"SELECT DISTINCT created_at, GROUP BY timestamp"| DB
+    
+    %% Cloudflare Connections
+    CloudflareDNS -.-> CloudflareEdge
+
+    </div>
+</body>
+</html>
