@@ -1,0 +1,7 @@
+tunnel: ef717ef4-c80c-4e16-8d3c-5db7476d2a11
+credentials-file: C:\Users\ryanz\.cloudflared\ef717ef4-c80c-4e16-8d3c-5db7476d2a11.json
+
+ingress:
+  - hostname: tab-sync.ryanzhou.xyz
+    service: http://localhost:5000
+  - service: http_status:404
