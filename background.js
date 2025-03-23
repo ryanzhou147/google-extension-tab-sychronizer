@@ -85,4 +85,14 @@ function syncTabs(serverUrl) {
     });
   });
 }
+// Add a listener for when the extension is unloaded
+//For example, when google chrome is closed or when the computer goes to sleep
+
+chrome.runtime.onSuspend.addListener(async () => {
+  console.log("Chrome is closing - performing final sync");
+  const result = await chrome.storage.sync.get(['serverUrl']);
+  if (result.serverUrl) {
+    await syncTabs(result.serverUrl);
+  }
+});
 
