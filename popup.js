@@ -1,4 +1,10 @@
 // extension/popup.js
+
+// This script is the main functionality of the extension
+// It handles syncing tabs, opening synced tabs, and viewing tab history
+// It also handles saving and loading the server URL from storage
+// The getPositionData and setPositionData functions are injected into tabs to get and set position data
+// The getPositionData function is used to get scroll position and video timestamp
 document.addEventListener('DOMContentLoaded', function() {
     const syncButton = document.getElementById('syncTabs');
     const openButton = document.getElementById('openTabs');
