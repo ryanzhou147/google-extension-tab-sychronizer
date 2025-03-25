@@ -21,7 +21,7 @@
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/JarvisUrInsane/google-extension-tab-synchronizer.git
+git clone https://github.com/JarvisUrInsane/google-extension-tab-sychronizer.git
 cd tab-synchronizer/server
 ```
 
