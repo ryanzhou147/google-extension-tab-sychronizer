@@ -6,6 +6,7 @@
 - Preserve scroll positions
 - Preserve video timestamps
 - Auto-synchronization every sixty seconds
+- Auto-synchronization on browser suspension
 
 ## Prerequisites
 
