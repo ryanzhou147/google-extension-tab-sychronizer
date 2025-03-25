@@ -2,11 +2,10 @@
 
 ## Features
 
-- Sync tabs across devices
+- Sync tabs in their respective windows across devices
 - Preserve scroll positions
-- Capture video timestamps
-- Configurable auto-sync intervals
-- View tab history
+- Preserve video timestamps
+- Auto-synchronization every sixty seconds
 
 ## Prerequisites
 
