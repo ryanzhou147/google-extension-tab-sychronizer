@@ -43,7 +43,7 @@ python app.py
 
 ### Chrome Extension Setup
 
-1. Open Chrome and navigate to `chrome://extensions/`
+1. Open Chrome and navigate to `chrome://extensions/` on the host device and desired connection devices
 2. Enable "Developer mode" (top right toggle)
 3. Click "Load unpacked"
 4. Select the `extension` directory of the project
