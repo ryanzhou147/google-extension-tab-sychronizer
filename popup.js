@@ -1,5 +1,3 @@
-// extension/popup.js
-
 // This script is the main functionality of the extension
 // It handles syncing tabs, opening synced tabs, and viewing tab history
 // It also handles saving and loading the server URL from storage

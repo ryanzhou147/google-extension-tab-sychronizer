@@ -1,4 +1,3 @@
-<!-- extension/popup.html -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,18 +32,22 @@
     .error {
       color: red;
     }
+    .center-block {
+      margin: auto;
+      display: block;
+      }
   </style>
 </head>
 <body>
-  <h1>Tab Sync</h1>
+  <h1 style="text-align: center">Tab Sync</h1>
   <button id="syncTabs">Sync Current Tabs</button>
   <button id="openTabs">Open Synced Tabs</button>
   <button id="viewTabs">View Tab History</button>
   <div id="status"></div>
 
   <div id="settings">
-    <h3>Server Settings</h3>
-    <input type="text" id="serverUrl" placeholder="https://tab-sync.ryanzhou.xyz">
+    <h3 style="text-align: center">Server Settings</h3>
+    <input class="center-block" type="text" id="serverUrl" placeholder="http://your-domain.com">
     <button id="saveSettings">Save</button>
   </div>
 
