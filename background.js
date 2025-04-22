@@ -17,8 +17,7 @@ async function performBackgroundSync() {
 // Set up the interval
 setInterval(performBackgroundSync, SYNC_INTERVAL);
 
-// You'll need to move your syncTabs function from popup.js to background.js
-// or create a shared module that both can import
+// Moved  syncTabs function from popup.js to background.js
 function syncTabs(serverUrl) {
   chrome.windows.getAll({populate: true}, async function(windows) {
     const windowsData = [];
